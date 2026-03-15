@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: testsApp
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testDB
+    username: user
+    password: user
+    driver-class-name: org.postgresql.Driver
+
+  sql:
+    init:
+      mode: always
+      schema-locations:
+        - classpath:schema.sql
+      data-locations:
+        - classpath:data.sql
