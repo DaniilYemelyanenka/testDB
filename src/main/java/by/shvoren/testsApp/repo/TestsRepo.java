@@ -132,4 +132,44 @@ public class TestsRepo {
                 rs.getInt("avg_minutes")
         ));
     }
+
+    public List<ExamneeTestsDTO> getTestByExamneeId(Integer examneeId) {
+        String sql = """
+                SELECT
+                    t.id AS testId,
+                    t.title AS testName,
+                    s.name AS subject,
+                    CASE
+                        WHEN ta.id IS NULL THEN 'NOT_STARTED'
+                        WHEN ta.id IS NOT NULL AND tr.id IS NULL THEN 'IN_PROGRESS'
+                        WHEN tr.total_score >= 8 THEN 'PASSED'
+                        WHEN tr.total_score < 8 THEN 'FAILED'
+                    END AS status,
+                               
+                    tr.total_score AS score
+                               
+                FROM examinees e
+                JOIN exam_registrations er ON er.examinee_id = e.id
+                JOIN exam_sessions es ON er.session_id = es.id
+                JOIN exam_sessions_subjects ess ON ess.session_id = es.id
+                JOIN tests t ON t.id = ess.test_id
+                JOIN subjects s ON s.id = t.subject_id
+                               
+                LEFT JOIN test_attempts ta
+                    ON ta.test_id = t.id AND ta.exam_registration_id = er.id
+                               
+                LEFT JOIN test_results tr
+                    ON tr.attempt_id = ta.id
+                               
+                WHERE e.id = ?
+                ORDER BY es.session_date DESC, t.title;
+                """;
+        return template.query(sql,(rs, rowNum) -> new ExamneeTestsDTO(
+                rs.getInt("testId"),
+                rs.getString("testName"),
+                rs.getString("subject"),
+                rs.getString("status"),
+                rs.getInt("score")
+        ),examneeId);
+    }
 }

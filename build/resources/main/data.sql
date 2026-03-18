@@ -108,20 +108,22 @@ INSERT INTO exam_centers(user_id,name,address,city,capacity) VALUES
 -- EXAM SESSION STATUS
 -- =========================
 INSERT INTO exam_session_status(name) VALUES
-('Scheduled'),('Completed'),('Cancelled');
+('ONGOING'),('COMPLETED'),('CANCELLED'),('PLANNED');
 
 -- =========================
 -- EXAM SESSIONS
 -- =========================
-INSERT INTO exam_sessions(center_id,session_date,start_time,end_time,registration_deadline,max_participants,exam_session_status_id) VALUES
+INSERT INTO exam_sessions(center_id, session_date, start_time, end_time, registration_deadline, max_participants, exam_session_status_id) VALUES
 (1,'2026-07-01','09:00','12:00','2026-06-25',50,1),
-(2,'2026-07-01','09:00','12:00','2026-06-25',50,1);
+(2,'2026-07-01','09:00','12:00','2026-06-25',50,1),
+(2,'2026-08-01','09:00','12:00','2026-06-25',50,4),
+(1,'2026-07-01','09:00','12:00','2026-06-25',50,2);
 
 -- =========================
 -- EXAM SESSIONS SUBJECTS
 -- =========================
 INSERT INTO exam_sessions_subjects(session_id,subject_id,test_id) VALUES
-(1,1,1),(1,2,2),(2,3,3);
+(1,1,1),(1,2,2),(2,3,3),(3,2,2),(4,1,1);
 
 -- =========================
 -- EXAMINEES
@@ -135,9 +137,11 @@ INSERT INTO examinees(user_id,passport_number,phone,registration_date) VALUES
 -- EXAM REGISTRATIONS
 -- =========================
 INSERT INTO exam_registrations(examinee_id,session_id,registration_date,status) VALUES
-(1,1,'2026-06-10','Registered'),
-(2,1,'2026-06-10','Registered'),
-(3,2,'2026-06-10','Registered');
+(1,1,'2026-06-10','REGISTRED'),
+(2,1,'2026-06-10','REGISTRED'),
+(1,3,'2026-06-10','REGISTRED'),
+(3,2,'2026-06-10','REGISTRED');
+
 
 -- =========================
 -- TEST ATTEMPTS
@@ -159,6 +163,6 @@ INSERT INTO participants_answers(attempt_id,question_id,selected_option_id) VALU
 -- TEST RESULTS
 -- =========================
 INSERT INTO test_results(attempt_id,total_score,passed,calculated_at) VALUES
-(1,5,TRUE,NOW()),
-(2,4,TRUE,NOW()),
-(3,4,TRUE,NOW());
+(1,10,TRUE,NOW()),
+(2,9,TRUE,NOW()),
+(3,9,TRUE,NOW());

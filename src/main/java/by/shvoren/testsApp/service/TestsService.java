@@ -1,6 +1,7 @@
 package by.shvoren.testsApp.service;
 
 import by.shvoren.testsApp.DAO.AvgScoreDateDTO;
+import by.shvoren.testsApp.DAO.ExamneeTestsDTO;
 import by.shvoren.testsApp.DAO.TestDTO;
 import by.shvoren.testsApp.DAO.TestsTimeDTO;
 import by.shvoren.testsApp.repo.TestsRepo;
@@ -16,6 +17,9 @@ public class TestsService {
     @Autowired
     private TestsRepo repo;
 
+//    @Autowired
+//    private UserService userService;
+
     public TestDTO getTestData(Integer id){
         return repo.getTestById(id);
     }
@@ -30,5 +34,9 @@ public class TestsService {
 
     public List<TestsTimeDTO> getTestsTimesList() {
         return repo.getTestsTimesList();
+    }
+
+    public List<ExamneeTestsDTO> getTestsListByExamneeEmail(String mail) {
+        return repo.getTestByExamneeId(2);
     }
 }

@@ -253,4 +253,4 @@ CREATE TABLE appeals (
                          CONSTRAINT fk_appeal_reviewer
                              FOREIGN KEY (reviewed_by)
                                  REFERENCES users(id)
-); ---- вот моя изначальная схема поправь все под нее 
+);
